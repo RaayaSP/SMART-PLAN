@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Plan | Study</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        /* Simple Top Bar */
+        nav { background: #f0f0f0; padding: 15px; border-bottom: 2px solid blue; margin-bottom: 20px; }
+        nav a { margin-right: 20px; text-decoration: none; color: blue; }
+        
+        /* Table Style - Borders only here */
+        table, th, td { border: 1px solid black; border-collapse: collapse; padding: 12px; text-align: left; }
+        table { width: 100%; margin-top: 20px; }
+        th { background-color: #f9f9f9; }
+
+        input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin-right: 5px; }
+        button { padding: 8px 15px; cursor: pointer; background-color: #e0e0e0; border: 1px solid #999; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <strong>Smart Plan</strong> |
+        <a href="index.html">Home</a>
+        <a href="todo.html">To-Do</a>
+        <a href="study.html"><b>Study</b></a>
+        <a href="mood.html">Journal</a>
+    </nav>
+
+    <h2>Study Planner</h2>
+    <p>Add your study sessions for today:</p>
+
+    <p>
+        <input type="text" id="subjectInput" placeholder="Subject">
+        <input type="text" id="topicInput" placeholder="Topic">
+        <input type="text" id="timeInput" placeholder="Time (e.g. 1 Hour)">
+        <button onclick="addStudyTask()">Add to Schedule</button>
+    </p>
+
+    <table id="studyTable">
+        <tr>
+            <th>Subject</th>
+            <th>Topic</th>
+            <th>Time Allotted</th>
+        </tr>
+    </table>
+
+    <p><a href="index.html">Back to Home</a></p>
+
+    <script>
+        function addStudyTask() {
+            // 1. Grab the values from the boxes
+            var sub = document.getElementById("subjectInput").value;
+            var top = document.getElementById("topicInput").value;
+            var hrs = document.getElementById("timeInput").value;
+
+            // Check if boxes are empty
+            if (sub === "" || top === "" || hrs === "") {
+                alert("Please fill all boxes!");
+                return;
+            }
+
+            // 2. Find the table
+            var table = document.getElementById("studyTable");
+
+            // 3. Create new row and cells
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+
+            // 4. Put the text in the cells
+            cell1.innerHTML = sub;
+            cell2.innerHTML = top;
+            cell3.innerHTML = hrs;
+
+            // 5. Clear the boxes for the next subject
+            document.getElementById("subjectInput").value = "";
+            document.getElementById("topicInput").value = "";
+            document.getElementById("timeInput").value = "";
+        }
+    </script>
+
+</body>
+</html>

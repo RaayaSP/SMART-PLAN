@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Journal</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        nav { background: #f0f0f0; padding: 15px; border-bottom: 2px solid blue; margin-bottom: 20px; }
+        nav a { margin-right: 20px; text-decoration: none; color: blue; }
+        
+        /* Table Style */
+        table, th, td { border: 1px solid black; border-collapse: collapse; padding: 10px; text-align: left; }
+        table { width: 100%; margin-top: 20px; }
+
+        textarea { width: 100%; height: 150px; margin-top: 10px; padding: 10px; }
+        .mood-box { margin: 15px 0; }
+        button { padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <strong>Smart Plan</strong> |
+        <a href="index.html">Home</a>
+        <a href="todo.html">To-Do</a>
+        <a href="study.html">Study</a>
+        <a href="mood.html"><b>Journal</b></a>
+    </nav>
+
+    <h2>Mood Tracker & Journal</h2>
+    
+    <div class="mood-box">
+        <p>How are you feeling?</p>
+        <select id="moodSelect">
+            <option>😊 Happy</option>
+            <option>😐 Neutral</option>
+            <option>😔 Sad</option>
+            <option>😴 Tired</option>
+        </select>
+    </div>
+
+    <p>Write about your day:</p>
+    <textarea id="journalText" placeholder="Dear Journal..."></textarea>
+    <br>
+    <button onclick="saveJournal()">Save Entry</button>
+
+    <hr>
+    <h3>Previous Entries</h3>
+    <table id="journalTable">
+        <tr>
+            <th>Date</th>
+            <th>Mood</th>
+            <th>Entry</th>
+        </tr>
+    </table>
+
+    <p><a href="index.html">Back to Home</a></p>
+
+    <script>
+        function saveJournal() {
+            var mood = document.getElementById("moodSelect").value;
+            var text = document.getElementById("journalText").value;
+            var table = document.getElementById("journalTable");
+
+            if (text === "") { alert("Please write something first!"); return; }
+
+            // Get today's date automatically
+            var today = new Date().toLocaleDateString();
+
+            // Create new row
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+
+            cell1.innerHTML = today;
+            cell2.innerHTML = mood;
+            cell3.innerHTML = text;
+
+            // Clear the text area
+            document.getElementById("journalText").value = "";
+        }
+    </script>
+
+</body>
+</html>

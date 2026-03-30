@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        nav { background: #f0f0f0; padding: 15px; border-bottom: 2px solid blue; margin-bottom: 20px; }
+        nav a { margin-right: 20px; text-decoration: none; color: blue; }
+        
+        /* Table Style */
+        table, th, td { border: 1px solid black; border-collapse: collapse; padding: 10px; }
+        table { width: 100%; margin-top: 20px; }
+
+        /* Progress Bar Style */
+        .progress-box { background: #ddd; width: 300px; height: 20px; border-radius: 10px; overflow: hidden; }
+        #myBar { background: blue; width: 0%; height: 100%; transition: 0.5s; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <strong>Smart Plan</strong> |
+        <a href="index.html">Home</a>
+        <a href="todo.html"><b>To-Do</b></a>
+        <a href="study.html">Study</a>
+        <a href="mood.html">Journal</a>
+    </nav>
+
+    <h2>My To-Do List</h2>
+    
+    <p>Progress:</p>
+    <div class="progress-box">
+        <div id="myBar"></div>
+    </div>
+    <p id="progressText">0% Completed</p>
+
+    <p>
+        <input type="text" id="taskName" placeholder="Activity Name">
+        <select id="taskPriority">
+            <option>High Priority</option>
+            <option>Medium Priority</option>
+            <option>Low Priority</option>
+        </select>
+        <button onclick="addNewTask()">Add to List</button>
+    </p>
+
+    <table id="myTable">
+        <tr>
+            <th>Activity</th>
+            <th>Priority</th>
+            <th>Status</th>
+        </tr>
+    </table>
+
+    <p><a href="index.html">Back to Home</a></p>
+
+    <script>
+        function addNewTask() {
+            var name = document.getElementById("taskName").value;
+            var priority = document.getElementById("taskPriority").value;
+            var table = document.getElementById("myTable");
+
+            if (name === "") { alert("Please enter a task!"); return; }
+
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+
+            cell1.innerHTML = name;
+            cell2.innerHTML = priority;
+            
+            // This creates a dropdown INSIDE the table row so you can change it later
+            cell3.innerHTML = `
+                <select class="status-select" onchange="updateProgress()">
+                    <option value="not">Not Done</option>
+                    <option value="done">Done</option>
+                </select>
+            `;
+
+            // Reset the input box
+            document.getElementById("taskName").value = "";
+            updateProgress(); // Refresh progress when a new task is added
+        }
+
+        function updateProgress() {
+            var allSelects = document.querySelectorAll(".status-select");
+            var totalTasks = allSelects.length;
+            var doneTasks = 0;
+
+            // Count how many are marked as "Done"
+            for (var i = 0; i < allSelects.length; i++) {
+                if (allSelects[i].value === "done") {
+                    doneTasks++;
+                }
+            }
+
+            // Calculate percentage
+            var percentage = 0;
+            if (totalTasks > 0) {
+                percentage = Math.round((doneTasks / totalTasks) * 100);
+            }
+
+            // Update the bar and text
+            document.getElementById("myBar").style.width = percentage + "%";
+            document.getElementById("progressText").innerHTML = percentage + "% Completed";
+        }
+    </script>
+
+</body>
+</html>
